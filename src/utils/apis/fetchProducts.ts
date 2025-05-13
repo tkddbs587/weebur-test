@@ -1,7 +1,11 @@
-import { ProductsResponse } from '@/types/products'
+import { BASE_URL } from '@/constants/baseUrl'
+import { FetchProductsParams, ProductsResponse } from '@/types/products'
 
-export async function fetchProducts(): Promise<ProductsResponse> {
-  const res = await fetch('https://dummyjson.com/products', {
+export async function fetchProducts({
+  skip = 0,
+  limit = 20,
+}: FetchProductsParams = {}): Promise<ProductsResponse> {
+  const res = await fetch(`${BASE_URL}/products?limit=${limit}&skip=${skip}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

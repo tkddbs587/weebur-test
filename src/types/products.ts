@@ -1,3 +1,9 @@
+import { ViewType } from './viewType'
+
+export interface FetchProductsParams {
+  skip?: number
+  limit?: number
+}
 export interface Product {
   id: number
   title: string
@@ -20,6 +26,11 @@ export interface ProductsResponse {
   total: number
   skip: number
   limit: number
+}
+
+export interface ProductListProps {
+  initialProducts: Product[]
+  viewType: ViewType | undefined
 }
 
 export interface ProductItemProps {

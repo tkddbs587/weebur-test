@@ -1,5 +1,4 @@
-import GridProductItem from '@/components/GridProductItem'
-import ListProductItem from '@/components/ListProductItem'
+import ProductList from '@/components/ProductList'
 import { VIEW_COOKIE_KEY } from '@/constants/cookieKey'
 import { ViewType } from '@/types/viewType'
 import { fetchProducts } from '@/utils/apis/fetchProducts'
@@ -11,7 +10,7 @@ const Home = async () => {
     | ViewType
     | undefined
 
-  const { products } = await fetchProducts()
+  const { products: initialProducts } = await fetchProducts()
 
   return (
     <ul
@@ -21,21 +20,7 @@ const Home = async () => {
           : 'flex max-w-1000 flex-col gap-8'
       }
     >
-      {products.map((product) => {
-        const { id, title, description, thumbnail, rating, reviews } = product
-        const commonProps = {
-          title,
-          description,
-          src: thumbnail,
-          rating,
-          reviewCount: reviews.length,
-        }
-        return viewType === 'grid' ? (
-          <GridProductItem {...commonProps} key={id} />
-        ) : (
-          <ListProductItem {...commonProps} key={id} />
-        )
-      })}
+      <ProductList viewType={viewType} initialProducts={initialProducts} />
     </ul>
   )
 }
