@@ -4,8 +4,22 @@ import { FetchProductsParams, ProductsResponse } from '@/types/products'
 export async function fetchProducts({
   skip = 0,
   limit = 20,
+  search,
+  sortBy,
+  order,
 }: FetchProductsParams = {}): Promise<ProductsResponse> {
-  const res = await fetch(`${BASE_URL}/products?limit=${limit}&skip=${skip}`, {
+  const params = new URLSearchParams()
+  params.set('limit', String(limit))
+  params.set('skip', String(skip))
+
+  if (search) params.set('q', search)
+  if (sortBy) params.set('sortBy', sortBy)
+  if (order) params.set('order', order)
+
+  const endpoint = search || sortBy ? 'products/search' : 'products'
+  const url = `${BASE_URL}/${endpoint}?${params.toString()}`
+
+  const res = await fetch(url, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

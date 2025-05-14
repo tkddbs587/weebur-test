@@ -3,6 +3,13 @@ import { ViewType } from './viewType'
 export interface FetchProductsParams {
   skip?: number
   limit?: number
+  order?: 'asc' | 'desc'
+  search?: string
+  sortBy?: string
+}
+export interface SearchParams {
+  q?: string
+  sort?: string
 }
 export interface Product {
   id: number
@@ -31,6 +38,7 @@ export interface ProductsResponse {
 export interface ProductListProps {
   initialProducts: Product[]
   viewType: ViewType | undefined
+  searchParams: SearchParams
 }
 
 export interface ProductItemProps {
@@ -40,4 +48,9 @@ export interface ProductItemProps {
   src: string
   rating: number
   reviewCount: number
+}
+
+export interface UseInfiniteProductsOptions {
+  initialProducts: Product[]
+  searchParams: SearchParams
 }
